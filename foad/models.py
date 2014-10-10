@@ -4,9 +4,10 @@ from django.db import models
 
 # Create your models here.
 
-from inscription.utils import make_ied_password
 ####
 #Acess à claroline
+from django_apogee.utils import make_etudiant_password
+
 
 class FoadUser(models.Model):
     """
@@ -40,7 +41,7 @@ class FoadUser(models.Model):
 
     def reset_password(self):
         try:
-            self.password = make_ied_password(self.username)
+            self.password = make_etudiant_password(self.username)
             self.save()
         except ValueError:
             pass
