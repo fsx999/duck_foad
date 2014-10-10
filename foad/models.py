@@ -1,0 +1,99 @@
+# coding=utf-8
+import random
+from django.db import models
+
+# Create your models here.
+
+from inscription.utils import make_ied_password
+####
+#Acess à claroline
+
+class FoadUser(models.Model):
+    """
+
+    """
+    user_id = models.IntegerField(primary_key=True)
+    statut = models.IntegerField(null=True)
+    username = models.CharField(max_length=20, null=True)  # code étudiant pou run étudiant
+    password = models.CharField(max_length=50, null=True)
+    ied_code = models.CharField(max_length=8, null=True)
+    email = models.CharField(max_length=100, null=True)
+    nom = models.CharField(max_length=60, null=True)
+    prenom = models.CharField(max_length=60, null=True)
+    official_code = models.CharField(max_length=40, null=True, db_column='officialCode')
+    phoneNumber = models.CharField(max_length=30, null=True)
+    perso_email = models.CharField(max_length=100, null=True)
+
+    def __unicode__(self):
+        return self.username
+
+    class Meta:
+        db_table = 'cl_user'
+        #managed = False
+
+    def change_password(self, password=None):
+        if password:
+            self.password = password
+        else:
+            self.password = random.randrange(1000, 100000)
+        self.save()
+
+    def reset_password(self):
+        try:
+            self.password = make_ied_password(self.username)
+            self.save()
+        except ValueError:
+            pass
+
+
+class FoadDip(models.Model):
+    user = models.ForeignKey(FoadUser, db_column='user_id', null=True)
+    dip_id = models.CharField(max_length=20, null=True)
+
+    def __unicode__(self):
+        return self.dip_id
+
+    class Meta:
+        db_table = 'cl_dip_user'
+        #managed = False
+
+
+class FoadCourUser(models.Model):
+    code_cours = models.CharField(max_length=40, primary_key=True, db_column='code_cours')
+    user = models.ForeignKey(FoadUser, db_column='user_id')
+    statut = models.IntegerField(default=5)
+    role = models.CharField(max_length=60, null=True)
+    team = models.IntegerField(default=0)
+    tutor = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = "cl_cours_user"
+        #managed = False
+
+
+class FoadCour(models.Model):
+    cours_id = models.IntegerField(primary_key=True, db_column='cours_id')
+    code = models.CharField(max_length=40, null=True)
+    fake_code = models.CharField(max_length=40, null=True)
+    directory = models.CharField(max_length=20, null=True)
+    dbName = models.CharField(max_length=40, null=True)
+    languageCourse = models.CharField(max_length=15, null=True)
+    faculte = models.CharField(max_length=12, null=True)
+    intitule = models.CharField(max_length=250, null=True)
+    visible = models.IntegerField( null=True)
+    enrollment_key = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        db_table = 'cl_cours'
+        #managed = False
+
+
+class CompteMail(models.Model):
+    pw_name = models.EmailField(primary_key=True)
+
+    class Meta:
+        db_table = 'vpopmail'
+        managed = False
+
+
+
