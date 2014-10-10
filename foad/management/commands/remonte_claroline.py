@@ -28,7 +28,7 @@ class Command(BaseCommand):
             try:
             ##47I86
 
-                cp += remontee_claroline(inscription=inscription, COURS, mail=mail)
+                cp += remontee_claroline(inscription=inscription, COURS, mail=mail, email_perso='paul.guichon@iedparis8.net')
                 if not cp % 100:
                     time.sleep(2)
             except FoadDip.MultipleObjectsReturned:
