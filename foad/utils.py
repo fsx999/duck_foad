@@ -1,5 +1,11 @@
 # coding=utf-8
+import os
 from django.db import connections, transaction
+import unicodedata
+from mailrobot.models import Mail
+from django_apogee.utils import make_etudiant_password
+from foad.models import FoadUser, FoadDip, FoadCourUser, CompteMail
+from django.conf import settings
 
 
 def dictfetchall(cursor):
@@ -132,29 +138,29 @@ def open_cour(db_name):
 
 def remontee_claroline(inscription, cours=None, envoi_mail=True, mail=None, email_perso=None):
         c2i = ["L1NDRO", "L2NDRO", "L3NDRO", "L1NPSY", "L2NPSY", "L3NPSY", "L3NEDU"]
-        cod_etp = inscription.COD_ETP
-        individu = inscription.COD_IND
+        cod_etp = inscription.cod_etp
+        individu = inscription.cod_ind
 
         # on cherche le étape en dessous pour les licences
         if cod_etp[0] == 'L' and cod_etp != 'L3NEDU':
             etapes = ['L' + str(x+1) + cod_etp[2:] for x in range(int(cod_etp[1]))]
         else:
             etapes = [cod_etp]
-        user_foad = FoadUser.objects.using('foad').filter(username=str(individu.COD_ETU))
+        user_foad = FoadUser.objects.using('foad').filter(username=str(individu.cod_etu))
         if not user_foad.count():
-            user_foad = FoadUser.objects.using('foad').filter(username=individu.COD_ETU)
+            user_foad = FoadUser.objects.using('foad').filter(username=individu.cod_etu)
         if user_foad.count():
             user_foad = user_foad[0]
         else:
-            user_foad = FoadUser(username=individu.COD_ETU)
-        if not individu.COD_ETU:
+            user_foad = FoadUser(username=individu.cod_etu)
+        if not individu.cod_etu:
             raise Exception(u"Il n'y a pas de code étudiant")
-        user_foad.email = str(individu.COD_ETU) + '@foad.iedparis8.net'
-        user_foad.nom = individu.LIB_NOM_PAT_IND
-        user_foad.prenom = individu.LIB_PR1_IND
+        user_foad.email = str(individu.cod_etu) + '@foad.iedparis8.net'
+        user_foad.nom = individu.lib_nom_pat_ind
+        user_foad.prenom = individu.lib_pr1_ind
         user_foad.statut = 5
-        user_foad.official_code = individu.COD_ETU
-        user_foad.password = make_ied_password(individu.COD_ETU)
+        user_foad.official_code = individu.cod_etu
+        user_foad.password = make_etudiant_password(individu.cod_etu)
         user_foad.save(using='foad')  # création de l'user
         for e in etapes:
             dips = FoadDip.objects.using('foad').filter(user_id=user_foad.user_id, dip_id=e)
