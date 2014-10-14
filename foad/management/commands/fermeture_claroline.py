@@ -4,7 +4,6 @@ from foad.models import FoadCour, FoadCourUser, FoadDip
 from django.core.management.base import BaseCommand
 
 
-
 class Command(BaseCommand):
     def handle(self, *args, **options):
         etape = ["L3NINF", "L2NINF", "L1NINF", "L3NDRO", "L2NDRO", "L1NDRO", "L3NEDU", "M2NEFI",
