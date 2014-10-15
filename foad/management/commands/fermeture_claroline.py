@@ -16,9 +16,9 @@ class Command(BaseCommand):
         cours_user = FoadCourUser.objects.using('foad_test').exclude(statut__in=[3,1,2], user__statut__in=[3,1,2])
         users = [x[0] for x in cours_user.values_list('user')]
         dips = FoadDip.objects.using('foad_test').filter(user__in=users)
-        cours_user.using('foad_test').delete(using='foad_test')
+        cours_user.using('foad_test').delete()
         dips.using('foad_test').delete()
-        print cours_user.count(using='foad_test')
+        print cours_user.count()
         print dips.count()
 
 
