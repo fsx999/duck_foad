@@ -15,10 +15,10 @@ class Command(BaseCommand):
         for x in etape:
             cursor.execute("""
             DELETE cl_cours_user FROM cl_cours_user INNER JOIN cl_cours ON cl_cours_user.code_cours=cl_cours.code and
-             cl_cours.code IN (SELECT code from cl_cours WHERE faculte=%s) INNER JOIN cl_user ON cl_user.user_id=cl_cours_user.user_id and cl_user.statut=5;
+             cl_cours.code IN (SELECT code from cl_cours WHERE faculte='%s') INNER JOIN cl_user ON cl_user.user_id=cl_cours_user.user_id and cl_user.statut=5;
             """ % x)
             cursor.execute("""
-            DELETE cl_dip_user FROM cl_dip_user INNER JOIN cl_user WHERE cl_dip_user.user_id=cl_user.user_id and cl_user.statut=5and cl_dip_user.dip_id=%s;
+            DELETE cl_dip_user FROM cl_dip_user INNER JOIN cl_user WHERE cl_dip_user.user_id=cl_user.user_id and cl_user.statut=5and cl_dip_user.dip_id='%s';
             """ % x)
 
 
