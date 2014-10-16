@@ -17,7 +17,7 @@ class Command(BaseCommand):
         users = [x[0] for x in cours_user.values_list('user')]
         users = list(set(users))
         print type(users[0])
-        if 1434 in users:
+        if 1434L in users:
             print "coucou"
         # dips = FoadDip.objects.using('foad_test').filter(user__in=users)
         # cours_user.using('foad_test').delete()
