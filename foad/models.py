@@ -69,7 +69,7 @@ class FoadCourUser(models.Model):
 
     class Meta:
         db_table = "cl_cours_user"
-        #managed = False
+        #managed = False'
 
 
 class FoadCour(models.Model):
