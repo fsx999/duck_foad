@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'paul'
-from foad.models import FoadCour, FoadCourUser, FoadDip
+from foad.models import FoadCour, FoadCourUser, FoadDip, SettingsEtapeFoad
 from django.core.management.base import BaseCommand
 from django.db import connections
-
+from datetime import datetime, date
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        etape = ["L3NDRO", "L2NDRO", "L1NDRO", "M1NPST", "M2NPST"]
-        # etape = ["M2NPCL",
-        # "L2NINF", "L1NINF", "L3NDRO", "L2NDRO", "L1NDRO", "L3NEDU", "M2NEFI",
-        #          "M1NEFI", "L3NPSY", "L2NPSY", "L1NPSY", "M2NPCL", "M1NPCL", "M2NPST", "M1NPST",
-        #          "M2NPEA", "M1NPEA"]
-        # etape += ["DSNATA"]
+        now = datetime.now()
+        etape = list(SettingsEtapeFoad.objects.filter(date_fermeture__lt=now, date_ouverture__gt=now).values_list('cod_etp', flat=True))
         cursor = connections['foad'].cursor()
         for x in etape:
             cursor.execute("""
@@ -22,11 +18,5 @@ class Command(BaseCommand):
             DELETE cl_dip_user FROM cl_dip_user INNER JOIN cl_user WHERE cl_dip_user.user_id=cl_user.user_id and cl_user.statut=5 and cl_dip_user.dip_id='%s';
             """ % x)
 
-
-        # dips = FoadDip.objects.using('foad_test').filter(user__in=users)
-        # cours_user.using('foad_test').delete()
-        # dips.using('foad_test').delete()
-        # print cours_user.count()
-        # print dips.count()
 
 
