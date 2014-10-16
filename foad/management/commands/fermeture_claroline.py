@@ -6,7 +6,7 @@ from django.db import connections
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        etape = ["L3NEDU"]
+        etape = ["L3NEDU", "L3NDRO", "L2NDRO", "L1NDRO", "M1NPST", "M2NPST"]
         # etape = ["M2NPCL",
         # "L2NINF", "L1NINF", "L3NDRO", "L2NDRO", "L1NDRO", "L3NEDU", "M2NEFI",
         #          "M1NEFI", "L3NPSY", "L2NPSY", "L1NPSY", "M2NPCL", "M1NPCL", "M2NPST", "M1NPST",
