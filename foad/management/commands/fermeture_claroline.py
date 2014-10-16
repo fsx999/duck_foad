@@ -6,12 +6,13 @@ from django.db import connections
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        etape = ["M2NPCL",
-        "L2NINF", "L1NINF", "L3NDRO", "L2NDRO", "L1NDRO", "L3NEDU", "M2NEFI",
-                 "M1NEFI", "L3NPSY", "L2NPSY", "L1NPSY", "M2NPCL", "M1NPCL", "M2NPST", "M1NPST",
-                 "M2NPEA", "M1NPEA"]
+        etape = ["L3NEDU"]
+        # etape = ["M2NPCL",
+        # "L2NINF", "L1NINF", "L3NDRO", "L2NDRO", "L1NDRO", "L3NEDU", "M2NEFI",
+        #          "M1NEFI", "L3NPSY", "L2NPSY", "L1NPSY", "M2NPCL", "M1NPCL", "M2NPST", "M1NPST",
+        #          "M2NPEA", "M1NPEA"]
         # etape += ["DSNATA"]
-        cursor = connections['foad_test'].cursor()
+        cursor = connections['foad'].cursor()
         for x in etape:
             cursor.execute("""
             DELETE cl_cours_user FROM cl_cours_user INNER JOIN cl_cours ON cl_cours_user.code_cours=cl_cours.code and

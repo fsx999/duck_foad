@@ -89,7 +89,6 @@ class FoadCour(models.Model):
 
     class Meta:
         db_table = 'cl_cours'
-        #managed = False
 
 
 class CompteMail(models.Model):
