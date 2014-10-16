@@ -4,4 +4,7 @@ import xadmin
 from foad.models import SettingsEtapeFoad
 
 
-xadmin.site.register(SettingsEtapeFoad)
+class SettingsEtapeFoadAdmin(object):
+    exclude = ('cod_cur', 'cod_cyc')
+
+xadmin.site.register(SettingsEtapeFoad, SettingsEtapeFoadAdmin)
