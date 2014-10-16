@@ -16,10 +16,12 @@ class Command(BaseCommand):
         cours_user = FoadCourUser.objects.using('foad_test').filter(code_cours__in=cours).exclude(statut__in=[3,1,2], user__statut__in=[3,1,2])
         users = [x[0] for x in cours_user.values_list('user')]
         users = list(set(users))
-        dips = FoadDip.objects.using('foad_test').filter(user__in=users)
-        cours_user.using('foad_test').delete()
+        if '1434' in users:
+            print "coucou"
+        # dips = FoadDip.objects.using('foad_test').filter(user__in=users)
+        # cours_user.using('foad_test').delete()
         # dips.using('foad_test').delete()
-        print cours_user.count()
-        print dips.count()
+        # print cours_user.count()
+        # print dips.count()
 
 
