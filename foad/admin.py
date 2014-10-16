@@ -1,6 +1,8 @@
 # coding=utf-8
 from django.contrib import admin
-from foad.models import FoadDip, FoadUser
+from django_mptt_admin.admin import DjangoMpttAdmin
+from mptt.admin import MPTTModelAdmin
+from foad.models import FoadDip, FoadUser, EtapeMpttModel
 
 
 class FoadDipUserAdmin(admin.TabularInline):
@@ -16,3 +18,4 @@ class FoadUserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(FoadUser, FoadUserAdmin)
+admin.site.register(EtapeMpttModel, DjangoMpttAdmin)

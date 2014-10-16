@@ -6,6 +6,9 @@ from django.db import models
 
 ####
 #Acess à claroline
+from django.utils.encoding import python_2_unicode_compatible
+from mptt.models import MPTTModel, TreeForeignKey
+from django_apogee.models import Etape
 from django_apogee.utils import make_etudiant_password
 
 
@@ -97,4 +100,20 @@ class CompteMail(models.Model):
         managed = False
 
 
+@python_2_unicode_compatible
+class SettingsEtapeFoad(Etape):
+    date_fermeture = models.DateTimeField(null=True, blank=True)
+    date_ouverture = models.DateTimeField(null=True, blank=True)
+    vu_etape_inf = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.lib_etp
+
+
+@python_2_unicode_compatible
+class EtapeMpttModel(MPTTModel):
+    etape = models.OneToOneField(SettingsEtapeFoad, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    def __str__(self):
+        return self.etape.lib_etp
