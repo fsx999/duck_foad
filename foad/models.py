@@ -106,7 +106,7 @@ class SettingsEtapeFoad(Etape):
     vu_etape_inf = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.lib_etp
+        return u'{] {}'.format(self.lib_etp, self.cod_etp)
 
 
 @python_2_unicode_compatible
