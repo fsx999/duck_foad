@@ -137,12 +137,9 @@ def open_cour(db_name):
 
 
 def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail=True, mail=None, email_perso=None):
-        # c2i = ["L1NDRO", "L2NDRO", "L3NDRO", "L1NPSY", "L2NPSY", "L3NPSY", "L3NEDU"]
-        cod_etp = inscription.cod_etp
 
-        individu = inscription.cod_ind
+        cod_etp, individu, annee, etapes = inscription.cod_etp, inscription.cod_ind, inscription.cod_anu, etps
         # on cherche le étape en dessous pour les licences
-        etapes = etps
         user_foad = FoadUser.objects.using(db).filter(username=str(individu.cod_etu))
         if not user_foad.count():
             user_foad = FoadUser.objects.using(db).filter(username=individu.cod_etu)
@@ -198,7 +195,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
 
             os.system(command)
         if not email_perso:
-            email = [individu.get_email(), email_ied(individu)] if not settings.DEBUG else ['paul.guichon@iedparis8.net']
+            email = [individu.get_email(annee), email_ied(individu)] if not settings.DEBUG else ['paul.guichon@iedparis8.net']
         else:
             email = [email_perso]
         if envoi_mail:
