@@ -180,7 +180,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
         new = FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                                code_cours="EU",
                                                                statut=5)[1]
-        if inscription.cod_etp in c2i:
+        if c2i:
             FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                          code_cours="EDR2INFA12",
                                                          statut=5)
