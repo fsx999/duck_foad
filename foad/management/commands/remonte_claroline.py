@@ -31,6 +31,7 @@ class Command(BaseCommand):
             for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp):
                 try:
                     cp += remontee_claroline(inscription, etps, c2i, 'foad_test', COURS, mail=mail, email_perso='paul.guichon@iedparis8.net')
+                    print 'effectu'
                     if not cp % 100:
                         time.sleep(2)
                 except FoadDip.MultipleObjectsReturned:
