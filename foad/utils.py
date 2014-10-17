@@ -164,7 +164,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             if not dips.count():
                 FoadDip.objects.using(db).create(user_id=user_foad.user_id, dip_id=e)
             if cours:
-                for cour in cours[e]:
+                for cour in cours[str(e)]:
                     t = FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                                          code_cours=cour,
                                                                          statut=5)
