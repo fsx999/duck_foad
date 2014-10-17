@@ -31,7 +31,7 @@ class Command(BaseCommand):
             cod_etp = etape.cod_etp
             for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
                 try:
-                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=False)
+                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail)
                     if not cp % 100:
                         time.sleep(2)
                 except FoadDip.MultipleObjectsReturned:
