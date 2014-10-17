@@ -8,7 +8,7 @@ from django.db import models
 #Acess à claroline
 from django.utils.encoding import python_2_unicode_compatible
 from mptt.models import MPTTModel, TreeForeignKey
-from django_apogee.models import Etape, AnneeUni
+from django_apogee.models import Etape, AnneeUni, InsAdmEtp
 from django_apogee.utils import make_etudiant_password
 
 
@@ -130,4 +130,10 @@ class SettingsAnneeFoad(AnneeUni):
         else:
             annee_en_cour = 'remontee fermée'
         return '{} {}'.format(self.cod_anu, annee_en_cour)
+
+
+class Remontee(models.Model):
+    remontee = models.BooleanField(default=False)
+    in_plateforme = models.BooleanField(default=False)
+    etape = models.OneToOneField(InsAdmEtp, related_name="remontee")
 

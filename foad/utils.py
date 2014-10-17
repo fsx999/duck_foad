@@ -4,7 +4,7 @@ from django.db import connections, transaction
 import unicodedata
 from mailrobot.models import Mail
 from django_apogee.utils import make_etudiant_password
-from foad.models import FoadUser, FoadDip, FoadCourUser, CompteMail
+from foad.models import FoadUser, FoadDip, FoadCourUser, CompteMail, Remontee
 from django.conf import settings
 
 
@@ -212,8 +212,11 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
 
                     })
             message.send()
-        # inscription.remontee.remontee = True
-        # inscription.remontee.save()
+        if not hasattr(inscription, 'remontee'):
+            Remontee.objects.create(etape=inscription, remontee=True)
+        else:
+            inscription.remontee.remontee = True
+            inscription.remontee.save()
         return 1
 
 
