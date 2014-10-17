@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
         COURS = {}
         mail = Mail.objects.get(name='remontee')
-        for e in etapes:
+        for e in list(etapes.values_list('cod_etp', flat=True)):
             COURS[e] = [x[0] for x in FoadCour.objects.using('foad_test').filter(faculte=e).values_list('code')]
         cp = 0
         message = u"la remonté dans claroline s'est effectuée\n"
