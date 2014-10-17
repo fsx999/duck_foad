@@ -5,7 +5,7 @@ from mailrobot.models import Mail
 from datetime import date, datetime
 from django.core.mail import send_mail
 from django_apogee.models import InsAdmEtp
-from foad.models import FoadUser, FoadDip, FoadCour, FoadCourUser, CompteMail, SettingsEtapeFoad
+from foad.models import FoadUser, FoadDip, FoadCour, FoadCourUser, CompteMail, SettingsEtapeFoad, Remontee
 from django.core.management.base import BaseCommand
 import os
 from foad.utils import remontee_claroline
@@ -23,12 +23,13 @@ class Command(BaseCommand):
         cp = 0
         message = u"la remonté dans claroline s'est effectuée\n"
         erreur = False
-        # # for inscription in InsAdmEtp.inscrits.filter(cod_etp__in=etape, remontee__in_plateforme=False):
+        for x in InsAdmEtp.inscrits.filter(remontee__isnull=True):
+            Remontee.objects.create(etape=x)
         for etape in etapes:
             etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
             c2i = etape.c2i
             cod_etp = etape.cod_etp
-            for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp):
+            for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__in_plateforme=False):
                 try:
                     cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=False)
                     if not cp % 100:
