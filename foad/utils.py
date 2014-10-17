@@ -136,19 +136,16 @@ def open_cour(db_name):
     """ % db_name)
 
 
-def remontee_claroline(inscription, cours=None, envoi_mail=True, mail=None, email_perso=None):
-        c2i = ["L1NDRO", "L2NDRO", "L3NDRO", "L1NPSY", "L2NPSY", "L3NPSY", "L3NEDU"]
+def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail=True, mail=None, email_perso=None):
+        # c2i = ["L1NDRO", "L2NDRO", "L3NDRO", "L1NPSY", "L2NPSY", "L3NPSY", "L3NEDU"]
         cod_etp = inscription.cod_etp
-        individu = inscription.cod_ind
 
+        individu = inscription.cod_ind
         # on cherche le étape en dessous pour les licences
-        if cod_etp[0] == 'L' and cod_etp != 'L3NEDU':
-            etapes = ['L' + str(x+1) + cod_etp[2:] for x in range(int(cod_etp[1]))]
-        else:
-            etapes = [cod_etp]
-        user_foad = FoadUser.objects.using('foad').filter(username=str(individu.cod_etu))
+        etapes = etps
+        user_foad = FoadUser.objects.using(db).filter(username=str(individu.cod_etu))
         if not user_foad.count():
-            user_foad = FoadUser.objects.using('foad').filter(username=individu.cod_etu)
+            user_foad = FoadUser.objects.using(db).filter(username=individu.cod_etu)
         if user_foad.count():
             user_foad = user_foad[0]
         else:
@@ -161,63 +158,63 @@ def remontee_claroline(inscription, cours=None, envoi_mail=True, mail=None, emai
         user_foad.statut = 5
         user_foad.official_code = individu.cod_etu
         user_foad.password = make_etudiant_password(individu.cod_etu)
-        user_foad.save(using='foad')  # création de l'user
+        user_foad.save(using=db)  # création de l'user
         for e in etapes:
-            dips = FoadDip.objects.using('foad').filter(user_id=user_foad.user_id, dip_id=e)
+            dips = FoadDip.objects.using(db).filter(user_id=user_foad.user_id, dip_id=e)
             if not dips.count():
-                FoadDip.objects.using('foad').create(user_id=user_foad.user_id, dip_id=e)
+                FoadDip.objects.using(db).create(user_id=user_foad.user_id, dip_id=e)
             if cours:
                 for cour in cours[e]:
-                    t = FoadCourUser.objects.using('foad').get_or_create(user_id=user_foad.user_id,
+                    t = FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                                          code_cours=cour,
                                                                          statut=5)
-        FoadCourUser.objects.using('foad').get_or_create(user_id=user_foad.user_id,
+        FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                          code_cours="EEIED",
                                                          statut=5)
-        FoadCourUser.objects.using('foad').get_or_create(user_id=user_foad.user_id,
+        FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                          code_cours="RD",
                                                          statut=5)
-        FoadCourUser.objects.using('foad').get_or_create(user_id=user_foad.user_id,
+        FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                          code_cours="ISIED",
                                                          statut=5)
-        new = FoadCourUser.objects.using('foad').get_or_create(user_id=user_foad.user_id,
+        new = FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                                code_cours="EU",
                                                                statut=5)[1]
         if inscription.cod_etp in c2i:
-            FoadCourUser.objects.using('foad').get_or_create(user_id=user_foad.user_id,
+            FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                          code_cours="EDR2INFA12",
                                                          statut=5)
-            FoadCourUser.objects.using('foad').get_or_create(user_id=user_foad.user_id,
+            FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                          code_cours="C2IIED",
                                                          statut=5)
-        if not CompteMail.objects.using('vpopmail').filter(pw_name=user_foad.username):
-            cod = user_foad.prenom.replace(" ", "\\ ").replace("'", "\\'") + '-' + user_foad.nom.replace(" ", "\\ ").replace("'", "\\'")
-            cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
-            command = u'/home/ied-www/bin/vadduser  -q 500000000 -c "%s" %s %s' % (
-                cod,
-                user_foad.email,
-                user_foad.password
-            )
-
-            os.system(command)
-        if not email_perso:
-            email = [individu.get_email(), individu.email_ied()] if not settings.DEBUG else ['paul.guichon@iedparis8.net']
-        else:
-            email = [email_perso]
-        if envoi_mail:
-            if not mail:
-                mail = Mail.objects.get(name='remontee')
-            message = mail.make_message(
-                recipients=email,
-                context={
-                    'etape': cod_etp,
-                    'prenom': user_foad.prenom,
-                    'username': user_foad.username,
-                    'password': user_foad.password,
-                    'email': user_foad.email,
-
-                    })
-            message.send()
-        inscription.remontee.remontee = True
-        inscription.remontee.save()
+        # if not CompteMail.objects.using('vpopmail').filter(pw_name=user_foad.username):
+        #     cod = user_foad.prenom.replace(" ", "\\ ").replace("'", "\\'") + '-' + user_foad.nom.replace(" ", "\\ ").replace("'", "\\'")
+        #     cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
+        #     command = u'/home/ied-www/bin/vadduser  -q 500000000 -c "%s" %s %s' % (
+        #         cod,
+        #         user_foad.email,
+        #         user_foad.password
+        #     )
+        #
+        #     os.system(command)
+        # if not email_perso:
+        #     email = [individu.get_email(), individu.email_ied()] if not settings.DEBUG else ['paul.guichon@iedparis8.net']
+        # else:
+        #     email = [email_perso]
+        # if envoi_mail:
+        #     if not mail:
+        #         mail = Mail.objects.get(name='remontee')
+        #     message = mail.make_message(
+        #         recipients=email,
+        #         context={
+        #             'etape': cod_etp,
+        #             'prenom': user_foad.prenom,
+        #             'username': user_foad.username,
+        #             'password': user_foad.password,
+        #             'email': user_foad.email,
+        #
+        #             })
+        #     message.send()
+        # inscription.remontee.remontee = True
+        # inscription.remontee.save()
         return 1

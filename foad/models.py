@@ -112,7 +112,7 @@ class SettingsEtapeFoad(Etape):
 
 @python_2_unicode_compatible
 class EtapeMpttModel(MPTTModel):
-    etape = models.OneToOneField(SettingsEtapeFoad, unique=True)
+    etape = models.OneToOneField(SettingsEtapeFoad, unique=True, related_name='mptt')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
     def __str__(self):
