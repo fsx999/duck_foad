@@ -6,7 +6,8 @@ from foad.models import SettingsEtapeFoad, SettingsAnneeFoad
 
 class SettingsEtapeFoadAdmin(object):
     exclude = ('cod_cur', 'cod_cyc')
-    list_display = ('__str__', 'date_ouverture', 'date_fermeture', 'vu_etape_inf')
+    list_display = ('__str__', 'date_ouverture', 'date_fermeture', 'vu_etape_inf', 'c2i')
+    list_editable = ('c2i',)
 
 
 class SettingsAnneeFoadAdmin(object):

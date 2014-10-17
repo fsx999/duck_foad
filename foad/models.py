@@ -104,6 +104,7 @@ class SettingsEtapeFoad(Etape):
     date_fermeture = models.DateTimeField(null=True, blank=True)
     date_ouverture = models.DateTimeField(null=True, blank=True)
     vu_etape_inf = models.BooleanField(default=True)
+    c2i = models.BooleanField(default=False)
 
     def __str__(self):
         return u'{} {}'.format(self.lib_etp, self.cod_etp)
