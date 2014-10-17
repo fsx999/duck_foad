@@ -2,11 +2,10 @@
 import time
 from django.db import IntegrityError
 from mailrobot.models import Mail
-from apogee.models import INS_ADM_ETP_IED
+from datetime import date, datetime
 from django.core.mail import send_mail
 from django_apogee.models import InsAdmEtp
-from foad.models import FoadUser, FoadDip, FoadCour, FoadCourUser, CompteMail
-from inscription.utils import make_ied_password
+from foad.models import FoadUser, FoadDip, FoadCour, FoadCourUser, CompteMail, SettingsEtapeFoad
 from django.core.management.base import BaseCommand
 import os
 from foad.utils import remontee_claroline
@@ -14,20 +13,19 @@ from foad.utils import remontee_claroline
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        now = datetime.now()
+        etapes = list(SettingsEtapeFoad.objects.filter(date_ouverture__lt=now).values_list('cod_etp', flat=True))
 
-        etape = ["L3NEDU"]
         COURS = {}
         mail = Mail.objects.get(name='remontee')
-        for e in etape:
-            COURS[e] = [x[0] for x in FoadCour.objects.using('foad').filter(faculte=e).values_list('code')]
+        # for e in etapes:
+        #     COURS[e] = [x[0] for x in FoadCour.objects.using('foad').filter(faculte=e).values_list('code')]
         cp = 0
         message = u"la remonté dans claroline s'est effectuée\n"
         erreur = False
-        # for inscription in InsAdmEtp.inscrits.filter(cod_etp__in=etape, remontee__in_plateforme=False):
-        for inscription in InsAdmEtp.inscrits.filter(cod_etp__in=etape):
+        # # for inscription in InsAdmEtp.inscrits.filter(cod_etp__in=etape, remontee__in_plateforme=False):
+        for inscription in InsAdmEtp.inscrits.filter(cod_etp__in=etapes):
             try:
-            ##47I86
-
                 cp += remontee_claroline(inscription, COURS, mail=mail, email_perso='paul.guichon@iedparis8.net')
                 if not cp % 100:
                     time.sleep(2)
