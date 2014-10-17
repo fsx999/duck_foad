@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django_apogee.models import Etape
-from foad.models import SettingsEtapeFoad, EtapeMpttModel
+from django_apogee.models import Etape, AnneeUni
+from foad.models import SettingsEtapeFoad, EtapeMpttModel, SettingsAnneeFoad
 
 __author__ = 'paul'
 from django.core.management.base import BaseCommand
@@ -19,6 +19,11 @@ class Command(BaseCommand):
             i = EtapeMpttModel.objects.get_or_create(etape=e)[0]
             i.lib_etp = e.lib_etp
             i.save()
+        for annee in AnneeUni.objects.all():
+            e = SettingsAnneeFoad.objects.get_or_create(cod_anu=annee.cod_anu, anneeuni_ptr=annee)[0]
+            e.eta_anu_iae = annee.eta_anu_iae
+            e.save()
+
         print "fin initialisation"
 
 

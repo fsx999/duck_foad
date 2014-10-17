@@ -8,7 +8,7 @@ from django.db import models
 #Acess à claroline
 from django.utils.encoding import python_2_unicode_compatible
 from mptt.models import MPTTModel, TreeForeignKey
-from django_apogee.models import Etape
+from django_apogee.models import Etape, AnneeUni
 from django_apogee.utils import make_etudiant_password
 
 
@@ -116,3 +116,16 @@ class EtapeMpttModel(MPTTModel):
 
     def __str__(self):
         return self.etape.lib_etp
+
+
+@python_2_unicode_compatible
+class SettingsAnneeFoad(AnneeUni):
+    inscription = models.BooleanField(default=False)
+    annee_en_cour = models.BooleanField(default=False)
+
+    def __str__(self):
+        if self.annee_en_cour:
+            annee_en_cour = 'remontee ouverte'
+        else:
+            annee_en_cour = 'remontee fermée'
+        return '{} {}'.format(self.cod_anu, annee_en_cour)
