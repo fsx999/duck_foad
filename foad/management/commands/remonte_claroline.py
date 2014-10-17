@@ -29,19 +29,19 @@ class Command(BaseCommand):
             c2i = etape.c2i
             cod_etp = etape.cod_etp
             for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp):
-                try:
+                # try:
                     cp += remontee_claroline(inscription, etps, c2i, 'foad_test', COURS, mail=mail, email_perso='paul.guichon@iedparis8.net')
                     print 'effectu'
                     if not cp % 100:
                         time.sleep(2)
-                except FoadDip.MultipleObjectsReturned:
-                    message += u"multi FoadDip %s %s\n" % (inscription.cod_ind.cod_etu, inscription.cod_etp)
-                except IntegrityError:
-                    message += u"Integrity error %s %s\n" % (inscription.cod_etp, inscription.cod_ind.cod_etu)
-                except UnicodeEncodeError:
-                    message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
-                except Exception, e:
-                    message += u"erreur %s \n" % e
+                # except FoadDip.MultipleObjectsReturned:
+                #     message += u"multi FoadDip %s %s\n" % (inscription.cod_ind.cod_etu, inscription.cod_etp)
+                # except IntegrityError:
+                #     message += u"Integrity error %s %s\n" % (inscription.cod_etp, inscription.cod_ind.cod_etu)
+                # except UnicodeEncodeError:
+                #     message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
+                # except Exception, e:
+                #     message += u"erreur %s \n" % e
         message += u"il y a eu %s mail envoyé" % cp
         send_mail("remontee claroline", message, 'nepasrepondre@iedparis8.net', ['paul.guichon@iedparis8.net'])
         print "fini"
