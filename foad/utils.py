@@ -187,34 +187,38 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             FoadCourUser.objects.using(db).get_or_create(user_id=user_foad.user_id,
                                                          code_cours="C2IIED",
                                                          statut=5)
-        # if not CompteMail.objects.using('vpopmail').filter(pw_name=user_foad.username):
-        #     cod = user_foad.prenom.replace(" ", "\\ ").replace("'", "\\'") + '-' + user_foad.nom.replace(" ", "\\ ").replace("'", "\\'")
-        #     cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
-        #     command = u'/home/ied-www/bin/vadduser  -q 500000000 -c "%s" %s %s' % (
-        #         cod,
-        #         user_foad.email,
-        #         user_foad.password
-        #     )
-        #
-        #     os.system(command)
-        # if not email_perso:
-        #     email = [individu.get_email(), individu.email_ied()] if not settings.DEBUG else ['paul.guichon@iedparis8.net']
-        # else:
-        #     email = [email_perso]
-        # if envoi_mail:
-        #     if not mail:
-        #         mail = Mail.objects.get(name='remontee')
-        #     message = mail.make_message(
-        #         recipients=email,
-        #         context={
-        #             'etape': cod_etp,
-        #             'prenom': user_foad.prenom,
-        #             'username': user_foad.username,
-        #             'password': user_foad.password,
-        #             'email': user_foad.email,
-        #
-        #             })
-        #     message.send()
+        if not CompteMail.objects.using('vpopmail').filter(pw_name=user_foad.username):
+            cod = user_foad.prenom.replace(" ", "\\ ").replace("'", "\\'") + '-' + user_foad.nom.replace(" ", "\\ ").replace("'", "\\'")
+            cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
+            command = u'/home/ied-www/bin/vadduser  -q 500000000 -c "%s" %s %s' % (
+                cod,
+                user_foad.email,
+                user_foad.password
+            )
+
+            os.system(command)
+        if not email_perso:
+            email = [individu.get_email(), email_ied(individu)] if not settings.DEBUG else ['paul.guichon@iedparis8.net']
+        else:
+            email = [email_perso]
+        if envoi_mail:
+            if not mail:
+                mail = Mail.objects.get(name='remontee')
+            message = mail.make_message(
+                recipients=email,
+                context={
+                    'etape': cod_etp,
+                    'prenom': user_foad.prenom,
+                    'username': user_foad.username,
+                    'password': user_foad.password,
+                    'email': user_foad.email,
+
+                    })
+            message.send()
         # inscription.remontee.remontee = True
         # inscription.remontee.save()
         return 1
+
+
+def email_ied(individu):
+    return str(individu.cod_etu) + '@foad.iedparis8.net'

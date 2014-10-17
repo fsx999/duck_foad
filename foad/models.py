@@ -130,3 +130,4 @@ class SettingsAnneeFoad(AnneeUni):
         else:
             annee_en_cour = 'remontee fermée'
         return '{} {}'.format(self.cod_anu, annee_en_cour)
+
