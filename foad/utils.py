@@ -192,6 +192,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
                 user_foad.email,
                 user_foad.password
             )
+            print command
 
             os.system(command)
         # if not email_perso:
