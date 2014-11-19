@@ -217,7 +217,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
         # else:
         #     inscription.remontee.remontee = True
         #     inscription.remontee.save()
-        # return 1
+        return 1
 
 
 def email_ied(individu):
