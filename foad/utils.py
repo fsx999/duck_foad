@@ -140,7 +140,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
 
         cod_etp, individu, annee, etapes = inscription.cod_etp, inscription.cod_ind, inscription.cod_anu, etps
         # on cherche le étape en dessous pour les licences
-        user_foad = FoadUser.objects.using(db).filter(username=str(individu.cod_etu))
+        user_foad = FoadUser.objects.using(db).filter(username=str(individu.cod_etu)).first()
         # if not user_foad.count():
         #     user_foad = FoadUser.objects.using(db).filter(username=individu.cod_etu)
         # if user_foad.count():
