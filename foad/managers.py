@@ -6,7 +6,7 @@ from django.db import models
 class AuditeurManager(models.Manager):
 
     def create_auditeur(self, individu):
-        self.get_or_create(
+        return self.get_or_create(
             last_name=individu.last_name,
             first_name=individu.first_name1,
             personal_email=individu.personal_email,

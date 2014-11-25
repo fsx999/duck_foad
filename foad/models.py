@@ -10,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from mptt.models import MPTTModel, TreeForeignKey
 from django_apogee.models import Etape, AnneeUni, InsAdmEtp
 from django_apogee.utils import make_etudiant_password
+from foad.managers import AuditeurManager
 
 
 class FoadUser(models.Model):
@@ -151,6 +152,7 @@ class AuditeurLibreApogee(models.Model):
     date_registration_current_year = models.DateField(auto_now_add=True)
     birthday = models.DateField("Date de naissance")
     annee = models.ForeignKey(AnneeUni)
+    objects = AuditeurManager()
 
     def __str__(self):
         return self.last_name + ' ' + self.first_name
