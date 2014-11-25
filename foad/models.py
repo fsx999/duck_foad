@@ -137,3 +137,20 @@ class Remontee(models.Model):
     in_plateforme = models.BooleanField(default=False)
     etape = models.OneToOneField(InsAdmEtp, related_name="remontee")
 
+
+@python_2_unicode_compatible
+class AuditeurLibreApogee(models.Model):
+    last_name = models.CharField("Nom", max_length=30)
+    first_name = models.CharField("Prenom", max_length=30)
+    personal_email = models.EmailField("email personnel", max_length=200)
+    address = models.CharField("adresse", max_length=200)
+    phone_number = models.CharField("numéro de téléphone", max_length=15, null=True, default=None)
+    code_ied = models.CharField('code ied', max_length=8)
+    status_modified = models.BooleanField(default=True)
+    access_claroline = models.BooleanField("Accès à claroline", default=True)
+    date_registration_current_year = models.DateField(auto_now_add=True)
+    birthday = models.DateField("Date de naissance")
+    annee = models.ForeignKey(AnneeUni)
+
+    def __str__(self):
+        return self.last_name + ' ' + self.first_name
