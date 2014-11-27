@@ -136,7 +136,7 @@ def open_cour(db_name):
     """ % db_name)
 
 
-def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail=True, mail=None, email_perso=None, function=None):
+def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail=True, mail=None, email_perso=None, auditeur=None):
 
         cod_etp, individu, annee, etapes = inscription.cod_etp, inscription.cod_ind, inscription.cod_anu, etps
         # on cherche le étape en dessous pour les licences
@@ -149,7 +149,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad = FoadUser(username=individu.cod_etu)
         if not individu.cod_etu:
             raise Exception(u"Il n'y a pas de code étudiant")
-        if function is None:
+        if auditeur is None:
             user_foad.email = str(individu.cod_etu) + '@foad.iedparis8.net'
             user_foad.nom = individu.lib_nom_pat_ind
             user_foad.prenom = individu.lib_pr1_ind
@@ -158,11 +158,13 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad.password = make_etudiant_password(individu.cod_etu)
             user_foad.save(using=db)  # création de l'user
         else:
-            user_foad = function(individu, user_foad, db)
-            try:
-                user_foad.save(using=db)
-            except IntegrityError:
-                pass
+            user_foad.email = individu.code_ied + '@foad.iedparis8.net'
+            user_foad.nom = individu.last_name
+            user_foad.prenom = individu.first_name
+            user_foad.statut = 5
+            user_foad.official_code = individu.code_ied
+            user_foad.password = make_etudiant_password(auditeur.code_ied[:-1])
+            user_foad.save(using=db)  # création de l'user
 
         for e in etapes:
             dips = FoadDip.objects.using(db).filter(user_id=user_foad.user_id, dip_id=e)
@@ -220,7 +222,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
 
                     })
             message.send()
-        if function:  # auditeur
+        if auditeur:  # auditeur
             return 1
         if not hasattr(inscription, 'remontee'):
             Remontee.objects.create(etape=inscription, remontee=True)
