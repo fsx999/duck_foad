@@ -62,4 +62,5 @@ def save_auditeur(auditeur, user_foad, db):
     user_foad.statut = 5
     user_foad.official_code = auditeur.code_ied
     user_foad.password = make_etudiant_password(auditeur.code_ied[:-1])
-    user_foad.save(using=db)  # création de l'user
+    user_foad.save(using=db) # création de l'user
+    return user_foad
