@@ -163,7 +163,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad.prenom = individu.first_name
             user_foad.statut = 5
             user_foad.official_code = individu.code_ied
-            user_foad.password = make_etudiant_password(auditeur.code_ied[:-1])
+            user_foad.password = make_etudiant_password(individu.code_ied[:-1])
             user_foad.save(using=db)  # création de l'user
 
         for e in etapes:
