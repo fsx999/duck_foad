@@ -159,7 +159,9 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad.save(using=db)  # création de l'user
         else:
             user_foad = function(individu, user_foad, db)
-            user_foad.save(using=db)
+            try:
+                user_foad.save(using=db)
+            except Inti:
         for e in etapes:
             dips = FoadDip.objects.using(db).filter(user_id=user_foad.user_id, dip_id=e)
             if not dips.count():
