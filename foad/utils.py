@@ -1,6 +1,6 @@
 # coding=utf-8
 import os
-from django.db import connections, transaction
+from django.db import connections, transaction, IntegrityError
 import unicodedata
 from mailrobot.models import Mail
 from django_apogee.utils import make_etudiant_password
@@ -161,7 +161,9 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad = function(individu, user_foad, db)
             try:
                 user_foad.save(using=db)
-            except Inti:
+            except IntegrityError:
+                pass
+
         for e in etapes:
             dips = FoadDip.objects.using(db).filter(user_id=user_foad.user_id, dip_id=e)
             if not dips.count():
