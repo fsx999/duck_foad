@@ -149,7 +149,6 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad = FoadUser(username=individu.cod_etu)
         if not individu.cod_etu:
             raise Exception(u"Il n'y a pas de code étudiant")
-        print individu.cod_etu
         if auditeur is None:
             user_foad.email = str(individu.cod_etu) + '@foad.iedparis8.net'
             user_foad.nom = individu.lib_nom_pat_ind
@@ -166,7 +165,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad.official_code = individu.code_ied
             user_foad.password = make_etudiant_password(individu.code_ied[:-1])
             user_foad.save(using=db)  # création de l'user
-
+            print user_foad.user_id
         for e in etapes:
             dips = FoadDip.objects.using(db).filter(user_id=user_foad.user_id, dip_id=e)
             if not dips.count():
