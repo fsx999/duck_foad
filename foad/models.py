@@ -154,5 +154,8 @@ class AuditeurLibreApogee(models.Model):
     annee = models.ForeignKey(AnneeUni)
     objects = AuditeurManager()
 
+    def get_email(self, annee):
+        return self.personal_email
+
     def __str__(self):
         return self.last_name + ' ' + self.first_name
