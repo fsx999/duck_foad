@@ -216,6 +216,8 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
 
                     })
             message.send()
+        if function:  # auditeur
+            return 1
         if not hasattr(inscription, 'remontee'):
             Remontee.objects.create(etape=inscription, remontee=True)
         else:

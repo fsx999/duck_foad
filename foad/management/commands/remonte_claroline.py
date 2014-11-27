@@ -50,6 +50,8 @@ class Command(BaseCommand):
             auditeur.cod_etu = auditeur.code_ied
             auditeur.cod_anu = 2014
             remontee_claroline(auditeur, ['L1NPSY'], False, function=save_auditeur)
+            auditeur.status_modified = False
+            auditeur.save()
         message += u"il y a eu %s mail envoyé" % cp
         send_mail("remontee claroline", message, 'nepasrepondre@iedparis8.net', ['paul.guichon@iedparis8.net'])
         print "fini"
@@ -62,5 +64,5 @@ def save_auditeur(auditeur, user_foad, db):
     user_foad.statut = 5
     user_foad.official_code = auditeur.code_ied
     user_foad.password = make_etudiant_password(auditeur.code_ied[:-1])
-    user_foad.save(using=db) # création de l'user
+    user_foad.save(using=db)  # création de l'user
     return user_foad
