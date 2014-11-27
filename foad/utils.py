@@ -149,7 +149,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad = FoadUser(username=individu.cod_etu)
         if not individu.cod_etu:
             raise Exception(u"Il n'y a pas de code étudiant")
-        print individu.code_etu
+        print individu.cod_etu
         if auditeur is None:
             user_foad.email = str(individu.cod_etu) + '@foad.iedparis8.net'
             user_foad.nom = individu.lib_nom_pat_ind
