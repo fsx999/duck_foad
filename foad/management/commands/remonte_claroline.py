@@ -48,6 +48,7 @@ class Command(BaseCommand):
             auditeur.cod_etp = 'L1NPSY'
             auditeur.cod_ind = auditeur
             auditeur.cod_etu = auditeur.code_ied
+            auditeur.cod_anu = 2014
             remontee_claroline(auditeur, ['L1NPSY'], False, function=save_auditeur)
         message += u"il y a eu %s mail envoyé" % cp
         send_mail("remontee claroline", message, 'nepasrepondre@iedparis8.net', ['paul.guichon@iedparis8.net'])
