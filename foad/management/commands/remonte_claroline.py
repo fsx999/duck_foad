@@ -30,9 +30,10 @@ class Command(BaseCommand):
             etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
             c2i = etape.c2i
             cod_etp = etape.cod_etp
-            for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
+            # for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
+            for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp):
                 try:
-                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail)
+                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=False)
                     if not cp % 100:
                         time.sleep(2)
                 except FoadDip.MultipleObjectsReturned:
