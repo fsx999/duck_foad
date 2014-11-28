@@ -195,7 +195,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
                                                          code_cours="C2IIED",
                                                          statut=5)
         if not CompteMail.objects.using('vpopmail').filter(pw_name=user_foad.username):
-            cod = user_foad.prenom.replace(" ", "\\ ").replace("'", "\\'").replace("`", "") + '-' + user_foad.nom.replace(" ", "\\ ").replace("'", "\\'").replace("`", "")
+            cod = user_foad.prenom.replace(" ", "\\ ").replace("'", "\\'").replace("`", "") + '-' + user_foad.nom.replace(" ", "\\ ").replace("'", "\\'").replace('(', '').replace(')', '').replace("`", "")
             cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
             command = u'/home/ied-www/bin/vadduser  -q 500000000 -c "%s" %s %s' % (
                 cod,
