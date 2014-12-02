@@ -20,7 +20,6 @@ class Command(BaseCommand):
             e.save()
             EtpGererCge.objects.get_or_create(cod_etp=e, cod_cge_id='IED', cod_cmp_id='034')
 
-
         for etape in Etape.objects.using("default").filter(etpgerercge__cod_cmp='034'):
             e = SettingsEtapeFoad.objects.get_or_create(cod_etp=etape.cod_etp, etape_ptr=etape)[0]
             e.lib_etp = etape.settingsetape.label
