@@ -222,6 +222,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
 
                     })
             message.send()
+            print "coucuo"
         # if auditeur:  # auditeur
         #     return 1
         # if not hasattr(inscription, 'remontee'):
