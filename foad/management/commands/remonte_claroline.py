@@ -53,7 +53,7 @@ class Command(BaseCommand):
             auditeur.cod_ind = auditeur
             auditeur.cod_etu = auditeur.code_ied
             auditeur.cod_anu = 2014
-            cp += remontee_claroline(auditeur, ['L1NPSY'], False, auditeur=True, envoi_mail=False)
+            cp += remontee_claroline(auditeur, [u'L1NPSY'], False, 'foad', COURS, auditeur=True, envoi_mail=False)
             auditeur.status_modified = False
             auditeur.save()
         message += u"il y a eu %s mail envoyé" % cp
