@@ -31,24 +31,24 @@ class Command(BaseCommand):
             c2i = etape.c2i
             cod_etp = etape.cod_etp
             print etps
-            # for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
-            # # for inscription in InsAdmEtp.inscrits.all():
-            #     try:
-            #         cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail)
-            #         if not cp % 100:
-            #             time.sleep(2)
-            #     except FoadDip.MultipleObjectsReturned:
-            #         message += u"multi FoadDip %s %s\n" % (inscription.cod_ind.cod_etu, inscription.cod_etp)
-            #     except IntegrityError:
-            #         message += u"Integrity error %s %s\n" % (inscription.cod_etp, inscription.cod_ind.cod_etu)
-            #     except UnicodeEncodeError:
-            #         message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
-            #     except Exception, e:
-            #         message += u"erreur %s \n" % e
-            #     print message
+            for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
+            # for inscription in InsAdmEtp.inscrits.all():
+                try:
+                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail)
+                    if not cp % 100:
+                        time.sleep(2)
+                except FoadDip.MultipleObjectsReturned:
+                    message += u"multi FoadDip %s %s\n" % (inscription.cod_ind.cod_etu, inscription.cod_etp)
+                except IntegrityError:
+                    message += u"Integrity error %s %s\n" % (inscription.cod_etp, inscription.cod_ind.cod_etu)
+                except UnicodeEncodeError:
+                    message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
+                except Exception, e:
+                    message += u"erreur %s \n" % e
+                print message
 
-        # for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
-        for auditeur in AuditeurLibreApogee.objects.all():
+        for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
+        # for auditeur in AuditeurLibreApogee.objects.all():
             auditeur.cod_etp = 'L1NPSY'
             auditeur.cod_ind = auditeur
             auditeur.cod_etu = auditeur.code_ied
