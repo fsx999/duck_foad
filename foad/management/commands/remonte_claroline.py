@@ -44,6 +44,7 @@ class Command(BaseCommand):
                     message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
                 except Exception, e:
                     message += u"erreur %s \n" % e
+                print message
         #
         # for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
         #     auditeur.cod_etp = 'L1NPSY'
