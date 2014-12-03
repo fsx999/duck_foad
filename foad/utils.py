@@ -136,7 +136,8 @@ def open_cour(db_name):
     """ % db_name)
 
 
-def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail=True, mail=None, email_perso=None, auditeur=None):
+def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail=True, mail=None, email_perso=None,
+                       auditeur=None):
 
         cod_etp, individu, annee, etapes = inscription.cod_etp, inscription.cod_ind, inscription.cod_anu, etps
         # on cherche le étape en dessous pour les licences

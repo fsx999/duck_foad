@@ -33,7 +33,7 @@ class Command(BaseCommand):
             # for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
             for inscription in InsAdmEtp.inscrits.all():
                 try:
-                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=True)
+                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail)
                     if not cp % 100:
                         time.sleep(2)
                 except FoadDip.MultipleObjectsReturned:
@@ -44,6 +44,7 @@ class Command(BaseCommand):
                     message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
                 except Exception, e:
                     message += u"erreur %s \n" % e
+                print message
 
         # for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
         # for auditeur in AuditeurLibreApogee.objects.all():
