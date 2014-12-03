@@ -44,15 +44,15 @@ class Command(BaseCommand):
                     message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
                 except Exception, e:
                     message += u"erreur %s \n" % e
-
-        for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
-            auditeur.cod_etp = 'L1NPSY'
-            auditeur.cod_ind = auditeur
-            auditeur.cod_etu = auditeur.code_ied
-            auditeur.cod_anu = 2014
-            cp += remontee_claroline(auditeur, ['L1NPSY'], False, auditeur=True)
-            auditeur.status_modified = False
-            auditeur.save()
+        #
+        # for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
+        #     auditeur.cod_etp = 'L1NPSY'
+        #     auditeur.cod_ind = auditeur
+        #     auditeur.cod_etu = auditeur.code_ied
+        #     auditeur.cod_anu = 2014
+        #     cp += remontee_claroline(auditeur, ['L1NPSY'], False, auditeur=True)
+        #     auditeur.status_modified = False
+        #     auditeur.save()
         message += u"il y a eu %s mail envoyé" % cp
         send_mail("remontee claroline", message, 'nepasrepondre@iedparis8.net', ['paul.guichon@iedparis8.net'])
         print "fini"
