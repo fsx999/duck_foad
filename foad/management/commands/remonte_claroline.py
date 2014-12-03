@@ -33,7 +33,7 @@ class Command(BaseCommand):
             # for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
             for inscription in InsAdmEtp.inscrits.all():
                 try:
-                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=False, email_perso='paul.guichon@iedparis8.net')
+                    cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=True)
                     if not cp % 100:
                         time.sleep(2)
                 except FoadDip.MultipleObjectsReturned:
@@ -45,15 +45,16 @@ class Command(BaseCommand):
                 except Exception, e:
                     message += u"erreur %s \n" % e
                 print message
-        #
+
         # for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
-        #     auditeur.cod_etp = 'L1NPSY'
-        #     auditeur.cod_ind = auditeur
-        #     auditeur.cod_etu = auditeur.code_ied
-        #     auditeur.cod_anu = 2014
-        #     cp += remontee_claroline(auditeur, ['L1NPSY'], False, auditeur=True)
-        #     auditeur.status_modified = False
-        #     auditeur.save()
+        for auditeur in AuditeurLibreApogee.objects.all():
+            auditeur.cod_etp = 'L1NPSY'
+            auditeur.cod_ind = auditeur
+            auditeur.cod_etu = auditeur.code_ied
+            auditeur.cod_anu = 2014
+            cp += remontee_claroline(auditeur, ['L1NPSY'], False, auditeur=True)
+            auditeur.status_modified = False
+            auditeur.save()
         message += u"il y a eu %s mail envoyé" % cp
         send_mail("remontee claroline", message, 'nepasrepondre@iedparis8.net', ['paul.guichon@iedparis8.net'])
         print "fini"
