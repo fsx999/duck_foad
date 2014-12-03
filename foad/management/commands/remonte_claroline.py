@@ -30,6 +30,7 @@ class Command(BaseCommand):
             etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
             c2i = etape.c2i
             cod_etp = etape.cod_etp
+            print etps
             # for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False):
             # # for inscription in InsAdmEtp.inscrits.all():
             #     try:
@@ -52,7 +53,7 @@ class Command(BaseCommand):
             auditeur.cod_ind = auditeur
             auditeur.cod_etu = auditeur.code_ied
             auditeur.cod_anu = 2014
-            cp += remontee_claroline(auditeur, ['L1NPSY'], False, auditeur=True)
+            cp += remontee_claroline(auditeur, ['L1NPSY'], False, auditeur=True, envoi_mail=False)
             auditeur.status_modified = False
             auditeur.save()
         message += u"il y a eu %s mail envoyé" % cp
