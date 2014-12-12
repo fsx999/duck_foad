@@ -136,6 +136,7 @@ class SettingsAnneeFoad(AnneeUni):
 class Remontee(models.Model):
     remontee = models.BooleanField(default=False)
     in_plateforme = models.BooleanField(default=False)
+    is_valide = models.BooleanField(default=False)
     etape = models.OneToOneField(InsAdmEtp, related_name="remontee")
 
 
