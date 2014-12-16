@@ -8,9 +8,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         now = datetime.now()
         # if len(args):
-        etape = list(SettingsEtapeFoad.objects.filter(date_fermeture__isnull=False).values_list('cod_etp', flat=True))
+        # etape = list(SettingsEtapeFoad.objects.filter(date_fermeture__isnull=False).values_list('cod_etp', flat=True))
         # else:
-        # etape = list(SettingsEtapeFoad.objects.filter(date_fermeture__lt=now, date_ouverture__gt=now).values_list('cod_etp', flat=True))
+        etape = list(SettingsEtapeFoad.objects.filter(date_fermeture__lt=now, date_ouverture__gt=now).values_list('cod_etp', flat=True))
         cursor = connections['foad'].cursor()
         for x in etape:
             cursor.execute("""
