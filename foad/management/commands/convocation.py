@@ -70,7 +70,7 @@ class Command(BaseCommand):
                 pdf.addFromFile(self.deroulement)
 
             pdf.join(f)
-            liste_email = [individu.get_email(), individu.email_ied()] if not settings.DEBUG else ['nepasrepondre@iedparis8.net']
+            liste_email = [individu.get_email(), individu.email_ied(), 'convocations@iedparis8.net'] if not settings.DEBUG else ['nepasrepondre@iedparis8.net']
             email = EmailMessage(subject=objects, body=texte, from_email='nepasrepondre@iedparis8.net',
                                  to=liste_email)
 
@@ -79,8 +79,7 @@ class Command(BaseCommand):
             f = open('convocation.pdf', 'r')
             email.attach(filename='convocation_regoupement.pdf', content=f.read())
             email.send()
-            break
-            print "email envoyé à %s" % individu.COD_ETU
+            print "email envoyé à %s" % individu.cod_etu
             if i == 100:
                 time.sleep(5)
                 i = 0
