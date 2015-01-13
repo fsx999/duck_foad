@@ -6,6 +6,7 @@ import os
 from django.template.loader import render_to_string
 from django.template.defaultfilters import date as _date
 from django.conf import settings
+from foad.utils import email_ied
 
 __author__ = 'paul'
 from django.core.management.base import BaseCommand
@@ -70,7 +71,7 @@ class Command(BaseCommand):
                 pdf.addFromFile(self.deroulement)
 
             pdf.join(f)
-            liste_email = [individu.get_email(), individu.email_ied(), 'convocations@iedparis8.net'] if not settings.DEBUG else ['nepasrepondre@iedparis8.net']
+            liste_email = [individu.get_email(2014), email_ied(individu), 'convocations@iedparis8.net'] if not settings.DEBUG else ['nepasrepondre@iedparis8.net']
             email = EmailMessage(subject=objects, body=texte, from_email='nepasrepondre@iedparis8.net',
                                  to=liste_email)
 
