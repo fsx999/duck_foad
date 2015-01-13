@@ -1,0 +1,88 @@
+{% load static %}
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            text-align: justify;
+            font-size: 12px;
+        }
+        .entette{
+            margin-left: 10cm;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: dashed;
+            padding: 10px;
+        }
+        .light{
+            font-size: 6pt;
+        }
+        #logo_ied{
+            zoom:70%;
+        }
+        .cadre{
+            border-style: dashed;
+            border-width: 2px;
+            padding: 3px;
+            margin-bottom: 10px;
+        }
+        .font{
+            font-size: 15px;
+        }
+
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<img id="logo_ied" src="{{ static }}/logo-ied.jpg"/>
+<div >
+    <i class="light">
+        UNIVERSITE PARIS 8 <br>
+        INSTITUT D’ENSEIGNEMENT A DISTANCE <br>
+        BAT. D, 2ème étage, bureau 242<br>
+        2 RUE DE LA LIBERTE<br>
+        93 526 SAINT DENIS CEDEX <br>
+    </i>
+</div><br>
+<div class="entette">
+
+Nom : {{ individu.LIB_NOM_PAT_IND }} {{ individu.LIB_NOM_USU_IND }}<br>
+Prénom : {{ individu.LIB_PR1_IND }}<br>
+        N° étudiant : {{ individu.COD_ETU }} <br>
+        N° groupe : {{ num_group }} <br>
+
+</div><br><br>
+
+<div>
+<b><u>CONVOCATION AUX REGROUPEMENTS 1ère ANNEE</u></b><br>
+
+</div><br>
+
+Madame, Mademoiselle, Monsieur,<br><br>
+<div>
+Vous êtes convoqué(e) pour les regroupements de <b>master 1 de psychologie clinique, pathologie et psychothérapies</b> 1ère année qui se dérouleront sur <b>3 journées</b> les {{ date_1 }} à l’IED.<br>
+</div><br>
+<div><b><u>Vous êtes dans le groupe: {{ num_group }}</u></b></div><br><br>
+
+<div><b>Accès : métro  ligne 13, direction et arrêt « Saint-Denis Université »</b></div><br>
+<br>
+
+<div>
+    <u>Dans le cas où vous seriez dans l’impossibilité d’assister à ces TP, veuillez nous en avertir dès réception de ce courrier.</u> Seul les raisons impératives (eg médicales) avec attestation certifiée pourront être considérées.<br>
+
+<br>
+
+Veuillez croire, Madame, Monsieur, à mes meilleures salutations.<br><br>
+</div>
+<div>
+    Lorine BALIKCI <br>
+    Gestionnaire à la scolarité IED <br><br>
+</div>
+<img src="{{ static }}/tampon.jpg" />
+<div><b>IED Université Paris 8 – 2, rue de la Liberté – Bât. D – 93526 Saint-Denis Cedex – Tél. 01 49 40 72 00</b></div>
+<div><center>Fax. 01 49 40 72 04 – www.iedparis8.net</center></div>
+</body>
+</html>

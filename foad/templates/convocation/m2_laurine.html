@@ -1,0 +1,91 @@
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            text-align: justify;
+            font-size: 12px;
+        }
+        .entette{
+            margin-left: 10cm;
+            border-width: 1px;
+            border-color: #000000;
+            border-style: dashed;
+            padding: 10px;
+        }
+        .light{
+            font-size: 6pt;
+        }
+        #logo_ied{
+            zoom:70%;
+        }
+        .cadre{
+            border-style: dashed;
+            border-width: 2px;
+            padding: 3px;
+            margin-bottom: 10px;
+        }
+        .font{
+            font-size: 15px;
+        }
+
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+{#<img id="logo_ied" src="{{ static }}/logo-ied.jpg"/>#}
+<div >
+    <i class="light">
+        UNIVERSITE PARIS 8 <br>
+        INSTITUT D’ENSEIGNEMENT A DISTANCE <br>
+        BAT. D, 2ème étage, bureau 242<br>
+        2 RUE DE LA LIBERTE<br>
+        93 526 SAINT DENIS CEDEX <br>
+    </i>
+</div>
+<div class="entette">
+
+Nom : {{ individu.LIB_NOM_PAT_IND }} {{ individu.LIB_NOM_USU_IND }}<br>
+Prénom : {{ individu.LIB_PR1_IND }}<br>
+        N° étudiant : {{ individu.COD_ETU }} <br>
+        N° groupe : {{ num_groupe }} <br>
+
+</div>
+
+<div>
+<b><u>CONVOCATION AUX REGROUPEMENTS</u></b><br>
+
+</div>
+
+Madame, Mademoiselle, Monsieur,<br>
+<div>
+Vous êtes convoqué(e) pour les travaux pratiques de <b>master 2 de psychologie clinique, pathologie et psychothérapies</b> qui se dérouleront du <b><u>15 janvier au 17 janvier 2014 à l’IED bât. D, 2ième étage</u></b>. Les 2 sessions de janvier et mars sont obligatoires. Si vous êtes en 2 année et que vous avez assisté lors de votre première année de master 2 à ces regroupements ils ne sont pas obligatoires pour vous cette année. (Prévenir Melle BALIKCI avec copie à A. PLAGNOL dans ce cas)<br><br>
+</div>
+<div><b><u>Vous êtes dans le groupe: {{ num_groupe }}, 15 janvier au 17 janvier 2014 de 9h00 à 18h30</u></b></div><br><br>
+
+<div><b><u>Vous êtes dans le SÉMINAIRE :  le 16 janvier 2014 de 14h15 à 18h30</u></b></div><br>
+
+
+<div><b>Accès : métro  ligne 13, direction et arrêt « Saint-Denis Université »</b></div><br><br>
+
+<div>
+    Les groupes sont complets et les dates non modifiables. Ce délai vous est donné pour que vous puissiez vous organiser au niveau professionnel et familial afin de pouvoir assister au TP<br><br><br>
+</div>
+<div>
+    <u>Dans le cas où vous seriez dans l’impossibilité d’assister à ces TP, veuillez nous en avertir dès réception de ce courrier.</u> Seul les raisons impératives (eg médicales) avec attestation certifiée pourront être considérées.<br><br>
+
+Les étudiants n’ayant pas communiqué leur choix de projet de recherche, sont automatiquement intégrés dans un groupe et un séminaire. Ils devront voir sur place, lors de ce regroupement, à s’inscrire auprès d’un directeur de recherche.<br><br>
+
+Veuillez croire, Madame, Monsieur, à mes meilleures salutations.<br>
+</div>
+<di>
+    Lorine BALIKCI <br>
+    Gestionnaire à la scolarité IED <br><br>
+</di>
+<div><b>IED Université Paris 8 – 2, rue de la Liberté – Bât. D – 93526 Saint-Denis Cedex – Tél. 01 49 40 72 00</b></div>
+<div><center>Fax. 01 49 40 72 04 – www.iedparis8.net</center></div>
+</body>
+</html>
