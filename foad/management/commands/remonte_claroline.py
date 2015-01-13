@@ -46,8 +46,8 @@ class Command(BaseCommand):
                 #     message += u"erreur %s \n" % e
                 # print message
 
-        # for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
-        for auditeur in AuditeurLibreApogee.objects.all():
+        for auditeur in AuditeurLibreApogee.objects.filter(status_modified=True):
+        # for auditeur in AuditeurLibreApogee.objects.all():
             auditeur.cod_etp = 'L1NPSY'
             auditeur.cod_ind = auditeur
             auditeur.cod_etu = auditeur.code_ied
