@@ -20,14 +20,14 @@ from datetime import datetime
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        fichier = settings.BASE_DIR + '/l3.xls'
+        fichier = settings.BASE_DIR + '/l2.xls'
         texte = u"""
         Ci-joint votre convocation aux regoupements
 
         Ceci est un email automatique.\n
         Veuillez ne pas y répondre.
         """
-        template = "convocation/convocation_l3.html"
+        template = "convocation/convocation_l2.html"
         objects = u"[IED] CONVOCATION AUX REGROUPEMENTS"
         num_etu = 0
         self.deroulement = None
@@ -54,17 +54,17 @@ class Command(BaseCommand):
             cod_etu = int(values[num_etu])
             context = {'static': os.path.join(BASE_DIR, 'documents/static/images/').replace('\\', '/')}
 
-            # context['num_group'] = values[6]
+            context['num_group'] = int(values[1])
 
-            context['date_1'] = values[5] + ' (' + values[4] + ')'
-            context['date_2'] = values[7] + ' (' + values[6] + ')'
+            context['date_1'] = self.date(values[3])
+            context['salle_1'] = int(values[2])
+            context['date_2'] = self.date(values[5])
+            context['salle_2'] = int(values[4])
 
             individu = Individu.objects.get(cod_etu=cod_etu)
             f = open('convocation.pdf', 'wb')
 
             context['individu'] = individu
-
-            context['num_groupe'] = values[3]
             pdf = pisapdf.pisaPDF()
             pdf.addDocument(pisa.CreatePDF(render_to_string(template, context)))  # on construit le pdf
             if self.deroulement:
