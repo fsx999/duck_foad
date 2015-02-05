@@ -19,7 +19,7 @@ class FoadUser(models.Model):
     """
     user_id = models.IntegerField(primary_key=True)
     statut = models.IntegerField(null=True)
-    username = models.CharField(max_length=20, null=True)  # code étudiant pou run étudiant
+    username = models.CharField(max_length=20, null=True)  # code étudiant pour un étudiant
     password = models.CharField(max_length=50, null=True)
     ied_code = models.CharField(max_length=8, null=True)
     email = models.CharField(max_length=100, null=True)

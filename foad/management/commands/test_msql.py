@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
 from django.db.utils import OperationalError
-from inscription.models import Step
-
 __author__ = 'paul'
 from django.core.management.base import BaseCommand
 from foad.utils import open_cour
