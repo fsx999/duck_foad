@@ -6,7 +6,7 @@ import os
 from django.template.loader import render_to_string
 from django.template.defaultfilters import date as _date
 from django.conf import settings
-from foad.utils import email_ied
+from duck_utils.utils import email_ied
 
 __author__ = 'paul'
 from django.core.management.base import BaseCommand

@@ -1,11 +1,14 @@
 # coding=utf-8
 import os
-from django.db import connections, transaction, IntegrityError
 import unicodedata
+
+from django.db import connections
 from mailrobot.models import Mail
-from django_apogee.utils import make_etudiant_password
-from foad.models import FoadUser, FoadDip, FoadCourUser, CompteMail, Remontee
 from django.conf import settings
+
+from django_apogee.utils import make_etudiant_password
+from duck_utils.utils import email_ied
+from foad.models import FoadUser, FoadDip, FoadCourUser, CompteMail, Remontee
 
 
 def dictfetchall(cursor):
@@ -234,5 +237,4 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
         return 1
 
 
-def email_ied(individu):
-    return str(individu.cod_etu) + '@foad.iedparis8.net'
+
