@@ -8,7 +8,7 @@ import mptt.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('django_apogee', '__first__'),
+        ('django_apogee', '0001_initial'),
     ]
 
     operations = [
