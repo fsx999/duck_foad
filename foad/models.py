@@ -155,6 +155,18 @@ class AuditeurLibreApogee(models.Model):
     annee = models.ForeignKey(AnneeUni)
     objects = AuditeurManager()
 
+    def nom(self):
+        return self.last_name
+
+    def prenom(self):
+        return self.first_name
+
+    def cod_etu(self):
+        return self.code_ied
+
+    def annulation(self):
+        return ''
+
     def get_email(self, annee):
         return self.personal_email
 
