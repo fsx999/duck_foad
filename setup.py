@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='foad',
     version='',
-    packages=['foad', 'foad.management', 'foad.management.commands', 'foad.south_migrations'],
+    packages=['foad', 'foad.management', 'foad.management.commands'],
     url='',
     license='',
     author='paulguichon',
