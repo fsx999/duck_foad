@@ -17,7 +17,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         now = datetime.now()
         etapes = SettingsEtapeFoad.objects.filter(date_ouverture__lt=now)
-        print "coucuo"
         COURS = {}
         mail = Mail.objects.get(name='remontee')
         for e in list(etapes.values_list('cod_etp', flat=True)):
