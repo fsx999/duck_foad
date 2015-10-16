@@ -41,6 +41,7 @@ Cordialement.
             cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
             password = make_etudiant_password(individu.cod_etu)
             email = str(individu.cod_etu)+'@foad.iedparis8.net',
+            print cod, email, password
             # email = 'nepasrepondre@iedparis8.net'
             if not CompteMail.objects.using('vpopmail').filter(pw_name=individu.cod_etu):
 
