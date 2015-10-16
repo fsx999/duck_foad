@@ -40,7 +40,7 @@ Cordialement.
             cod = individu.lib_pr1_ind.replace(" ", "\\ ").replace("'", "\\'").replace("`", "") + '-' + individu.lib_nom_pat_ind.replace(" ", "\\ ").replace("'", "\\'").replace('(', '').replace(')', '').replace("`", "")
             cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
             password = make_etudiant_password(individu.cod_etu)
-            email = str(individu.cod_etu)+'@foad.iedparis8.net',
+            email = str(individu.cod_etu)+'@foad.iedparis8.net'
             print cod, email, password
             # email = 'nepasrepondre@iedparis8.net'
             if email:
