@@ -60,3 +60,5 @@ Cordialement.
 
             object = "[IED] identifiant"
             send_mail(object, m, 'nepasrepondre@iedparis8.net', [email])
+            print individu.cod_etu
+        print "fini"
