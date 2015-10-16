@@ -61,7 +61,6 @@ Cordialement.
                         email= str(email))
 
                 object = "[IED] identifiant"
-                i
                 send_mail(object, m, 'nepasrepondre@iedparis8.net', [email])
                 print individu.cod_etu
         print "fini"
