@@ -43,23 +43,25 @@ Cordialement.
             email = str(individu.cod_etu)+'@foad.iedparis8.net',
             print cod, email, password
             # email = 'nepasrepondre@iedparis8.net'
-            if not CompteMail.objects.using('vpopmail').filter(pw_name=individu.cod_etu):
+            if email:
+                if not CompteMail.objects.using('vpopmail').filter(pw_name=individu.cod_etu):
 
-                command = u'/home/ied-www/bin/vadduser  -q 2000000000 -c "%s" %s %s' % (
-                    cod,
-                    email,
-                    password
+                    command = u'/home/ied-www/bin/vadduser  -q 2000000000 -c "%s" %s %s' % (
+                        cod,
+                        email,
+                        password
 
-                )
+                    )
 
-                os.system(command)
-            m = text.format(etape=str(code_etud.cod_etp),
-                    prenom= str(individu.lib_pr1_ind),
-                    username = str(individu.cod_etu),
-                    password = str(password),
-                    email= str(email))
+                    os.system(command)
+                m = text.format(etape=str(code_etud.cod_etp),
+                        prenom= str(individu.lib_pr1_ind),
+                        username = str(individu.cod_etu),
+                        password = str(password),
+                        email= str(email))
 
-            object = "[IED] identifiant"
-            send_mail(object, m, 'nepasrepondre@iedparis8.net', [email])
-            print individu.cod_etu
+                object = "[IED] identifiant"
+                i
+                send_mail(object, m, 'nepasrepondre@iedparis8.net', [email])
+                print individu.cod_etu
         print "fini"
