@@ -11,7 +11,8 @@ from django.core.mail import send_mail
 class Command(BaseCommand):
     def handle(self, *args, **options):
         mail = Mail.objects.get(name='remontee')
-        for code_etud in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp='L3NEDU', cod_anu=2015):
+        cod_etps = ['L3NEDU', 'M1NEFI', 'L1NDRO', 'L2NDRO', 'L3NDRO']
+        for code_etud in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp__in=cod_etps, cod_anu=2015):
             individu = code_etud.cod_ind
             cod = individu.lib_pr1_ind.replace(" ", "\\ ").replace("'", "\\'").replace("`", "") + '-' + individu.lib_nom_pat_ind.replace(" ", "\\ ").replace("'", "\\'").replace('(', '').replace(')', '').replace("`", "")
             cod = unicodedata.normalize('NFKD', unicode(cod)).encode("ascii", "ignore").upper()
