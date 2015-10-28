@@ -30,18 +30,18 @@ class Command(BaseCommand):
                     )
 
                     os.system(command)
-                mail.make_message(
-                    sender='nepasrepondre@iedparis8.net',
-                    recipients=(email,),
-                    context={
-                        'etape':str(code_etud.cod_etp),
-                        'prenom': str(individu.lib_pr1_ind),
-                        'username': str(individu.cod_etu),
-                        'password': str(password),
-                        'email': str(email)
-                    }
-                )
-                mail.send()
+            mail.make_message(
+                sender='nepasrepondre@iedparis8.net',
+                recipients=(individu.get_email(2015), email),
+                context={
+                    'etape':str(code_etud.cod_etp),
+                    'prenom': str(individu.lib_pr1_ind),
+                    'username': str(individu.cod_etu),
+                    'password': str(password),
+                    'email': str(email)
+                }
+            )
+            mail.send()
 
-                print individu.cod_etu
+            print individu.cod_etu
         print "fini"
