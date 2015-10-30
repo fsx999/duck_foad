@@ -12,20 +12,24 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         mail = Mail.objects.get(name='remontee')
         cod_etps = [
-           'L3NEDU', 'M1NEFI', 'L1NDRO', 'L2NDRO', 'L3NDRO',
+            'L3NEDU',
+            'M1NEFI',
+            'L1NDRO',
+            'L2NDRO',
+            'L3NDRO',
             'L1NPSY',
-        'L2NPSY',
-        'L3NPSY',
-        'L1NINF',
-        'L2NINF',
-        'L3NINF',
-        'DSNATA',
-        'M1NPCL',
-        'M2NPCL',
-        'M1NPEA',
-        'M2NPEA',
-        'M1NPST',
-        'M2NPST',
+            'L2NPSY',
+            'L3NPSY',
+            'L1NINF',
+            'L2NINF',
+            'L3NINF',
+            'DSNATA',
+            'M1NPCL',
+            'M2NPCL',
+            'M1NPEA',
+            'M2NPEA',
+            'M1NPST',
+            'M2NPST',
         ]
         for code_etud in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp__in=cod_etps, cod_anu=2015):
             individu = code_etud.cod_ind
