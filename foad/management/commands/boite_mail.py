@@ -23,7 +23,7 @@ class Command(BaseCommand):
             'L1NINF',
             'L2NINF',
             'L3NINF',
-            'DSNATA',
+            'DSNPCA',
             'M1NPCL',
             'M2NPCL',
             'M1NPEA',
