@@ -153,23 +153,15 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             user_foad = FoadUser(username=individu.cod_etu)
         if not individu.cod_etu:
             raise Exception(u"Il n'y a pas de code étudiant")
-        if auditeur is None:
-            user_foad.email = str(individu.cod_etu) + '@foad.iedparis8.net'
-            user_foad.nom = individu.lib_nom_pat_ind
-            user_foad.prenom = individu.lib_pr1_ind
-            user_foad.statut = 5
-            user_foad.official_code = individu.cod_etu
-            user_foad.password = make_etudiant_password(individu.cod_etu)
-            user_foad.save(using=db)  # création de l'user
-        else:
-            user_foad.email = individu.code_ied + '@foad.iedparis8.net'
-            user_foad.nom = individu.last_name
-            user_foad.prenom = individu.first_name
-            user_foad.statut = 5
-            user_foad.official_code = individu.code_ied
-            user_foad.password = make_etudiant_password(individu.code_ied[:-1])
-            user_foad.save(using=db)  # création de l'user
-            user_foad = FoadUser.objects.using(db).get(username=user_foad.username)
+
+        user_foad.email = str(individu.cod_etu) + '@foad.iedparis8.net'
+        user_foad.nom = individu.lib_nom_pat_ind
+        user_foad.prenom = individu.lib_pr1_ind
+        user_foad.statut = 5
+        user_foad.official_code = individu.cod_etu
+        user_foad.password = make_etudiant_password(individu.cod_etu)
+        user_foad.save(using=db)  # création de l'user
+
         for e in etapes:
             dips = FoadDip.objects.using(db).filter(user_id=user_foad.user_id, dip_id=e)
             if not dips.count():

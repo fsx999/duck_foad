@@ -30,7 +30,6 @@ class Command(BaseCommand):
             c2i = etape.c2i
             cod_etp = etape.cod_etp
             for inscription in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp=cod_etp):
-                print "cocuu"
         #     for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__is_valide=True):
                 try:
                     cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=True)
@@ -44,6 +43,7 @@ class Command(BaseCommand):
                     message += u"Unicode erreur %s\n" % inscription.cod_ind.cod_etu
                 except Exception, e:
                     message += u"erreur %s \n" % e
+                    raise e
                 print message
 
         message += u"il y a eu %s mail envoyé" % cp
