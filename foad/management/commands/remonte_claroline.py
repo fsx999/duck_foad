@@ -27,7 +27,7 @@ class Command(BaseCommand):
         #     Remontee.objects.create(etape=x)
         for etape in etapes:
             etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
-            print etps
+            etps = ['M2NEFI']
             c2i = etape.c2i
             cod_etp = etape.cod_etp
             for inscription in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp=cod_etp):
