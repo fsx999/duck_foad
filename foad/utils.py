@@ -214,7 +214,7 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
             email = [email_perso]
         if envoi_mail:
             if not mail:
-                mail = Mail.objects.get(name='remontee')
+                mail = Mail.objects.get(name='remontee_claroline')
             message = mail.make_message(
                 recipients=email,
                 context={
@@ -229,11 +229,11 @@ def remontee_claroline(inscription, etps, c2i, db='foad', cours=None, envoi_mail
 
         if auditeur:  # auditeur
             return 1
-        if not hasattr(inscription, 'remontee'):
-            Remontee.objects.create(etape=inscription, remontee=True)
-        else:
-            inscription.remontee.remontee = True
-            inscription.remontee.save()
+        # if not hasattr(inscription, 'remontee'):
+        #     Remontee.objects.create(etape=inscription, remontee=True)
+        # else:
+        #     inscription.remontee.remontee = True
+        #     inscription.remontee.save()
         return 1
 
 

@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from mailrobot.models import Mail
 from datetime import date, datetime
 from django.core.mail import send_mail
-from django_apogee.models import InsAdmEtp
+from django_apogee.models import InsAdmEtp, InsAdmEtpInitial
 from django_apogee.utils import make_etudiant_password
 from foad.models import FoadUser, FoadDip, FoadCour, FoadCourUser, CompteMail, SettingsEtapeFoad, Remontee, \
     AuditeurLibreApogee
@@ -18,18 +18,18 @@ class Command(BaseCommand):
         now = datetime.now()
         etapes = SettingsEtapeFoad.objects.filter(date_ouverture__lt=now)
         COURS = {}
-        mail = Mail.objects.get(name='remontee')
+        mail = Mail.objects.get(name='remontee_claroline')
         for e in list(etapes.values_list('cod_etp', flat=True)):
             COURS[e] = [x[0] for x in FoadCour.objects.using('foad').filter(faculte=e).values_list('code')]
         cp = 0
         message = u"la remonté dans claroline s'est effectuée\n"
-        for x in InsAdmEtp.inscrits.filter(remontee__isnull=True):
-            Remontee.objects.create(etape=x)
-        for etape in etapes:
+        # for x in InsAdmEtpInitial.inscrits.using('oracle').filter(remontee__isnull=True):
+        #     Remontee.objects.create(etape=x)
+        for etape in ['M2NEFI']:
             etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
             c2i = etape.c2i
             cod_etp = etape.cod_etp
-            for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__remontee=False, remontee__is_valide=True):
+            for inscription in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp=cod_etp):
         #     for inscription in InsAdmEtp.inscrits.filter(cod_etp=cod_etp, remontee__is_valide=True):
                 try:
                     cp += remontee_claroline(inscription, etps, c2i, 'foad', COURS, mail=mail, envoi_mail=True)
