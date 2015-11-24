@@ -16,6 +16,7 @@ from foad.utils import remontee_claroline
 class Command(BaseCommand):
     def handle(self, *args, **options):
         now = datetime.now()
+
         etapes = SettingsEtapeFoad.objects.filter(cod_etp='M2NEFI')
         COURS = {}
         mail = Mail.objects.get(name='remontee_claroline')
@@ -27,7 +28,35 @@ class Command(BaseCommand):
         #     Remontee.objects.create(etape=x)
         for etape in etapes:
             etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
-            etps = ['M2NEFI']
+            etps = [
+                'L1NDRO',
+                'L2NDRO',
+                'L3NDRO',
+                # droit
+                'L1NPSY',
+                'L2NPSY',
+                'L3NPSY',
+                # licence psy
+                'L1NINF',
+                'L2NINF',
+                'L3NINF',
+                # licence info
+                'DSNPCA',
+                # desu
+                'M1NPCL',
+                'M2NPCL',
+                # clinique
+                'M1NPEA',
+                'M2NPEA',
+                # enfance
+                'M1NPST',
+                'M2NPST',
+                # social
+                'L3NEDU',
+                'M1NEFI',
+                'M2NEFI'
+                # education
+            ]
             c2i = etape.c2i
             cod_etp = etape.cod_etp
             for inscription in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp=cod_etp):
