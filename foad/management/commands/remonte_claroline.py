@@ -16,19 +16,7 @@ from foad.utils import remontee_claroline
 class Command(BaseCommand):
     def handle(self, *args, **options):
         now = datetime.now()
-
-        etapes = SettingsEtapeFoad.objects.filter(cod_etp='M2NEFI')
-        COURS = {}
-        mail = Mail.objects.get(name='remontee_claroline')
-        for e in list(etapes.values_list('cod_etp', flat=True)):
-            COURS[e] = [x[0] for x in FoadCour.objects.using('foad').filter(faculte=e).values_list('code')]
-        cp = 0
-        message = u"la remonté dans claroline s'est effectuée\n"
-        # for x in InsAdmEtpInitial.inscrits.using('oracle').filter(remontee__isnull=True):
-        #     Remontee.objects.create(etape=x)
-        for etape in etapes:
-            etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
-            etps = [
+        etps = [
                 'L1NDRO',
                 'L2NDRO',
                 'L3NDRO',
@@ -56,7 +44,19 @@ class Command(BaseCommand):
                 'M1NEFI',
                 'M2NEFI'
                 # education
-            ]
+        ]
+        etapes = SettingsEtapeFoad.objects.filter(cod_etp__in=etps)
+        COURS = {}
+        mail = Mail.objects.get(name='remontee_claroline')
+        for e in list(etapes.values_list('cod_etp', flat=True)):
+            COURS[e] = [x[0] for x in FoadCour.objects.using('foad').filter(faculte=e).values_list('code')]
+        cp = 0
+        message = u"la remonté dans claroline s'est effectuée\n"
+        # for x in InsAdmEtpInitial.inscrits.using('oracle').filter(remontee__isnull=True):
+        #     Remontee.objects.create(etape=x)
+        for etape in etapes:
+            etps = list(etape.mptt.get_descendants(include_self=True).values_list('etape__cod_etp', flat=True))
+
             c2i = etape.c2i
             cod_etp = etape.cod_etp
             for inscription in InsAdmEtpInitial.inscrits.using('oracle').filter(cod_etp=cod_etp):
