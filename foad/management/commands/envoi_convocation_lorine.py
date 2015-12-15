@@ -7,6 +7,9 @@ from django.template.loader import render_to_string
 from django_apogee.models import InsAdmEtpInitial, Etape
 from pprint import pprint
 import os
+from django.conf import settings
+from utils import make_pdf, get_email_envoi
+
 
 class Command(BaseCommand):
     help = "Envoi convocation regroupements"
@@ -63,29 +66,28 @@ class Command(BaseCommand):
             context.update({'jour': str(now.day),
                             'mois': mois_dict[now.month],
                             'annee': str(now.year)})
-
-            convocation_html_filename = '/home/vagrant/PycharmProjects/duck_site/convocation.html'
-            convocation_pdf_filename = '/home/vagrant/PycharmProjects/duck_site/convocation.pdf'
+            print context
+            f = make_pdf(template, context)
+            # convocation_html_filename = settings.BASE_DIR+'convocation.html'
+            # convocation_pdf_filename = '/home/vagrant/PycharmProjects/duck_site/convocation.pdf'
             # Creation du fichier html
-            f = open(convocation_html_filename, 'wb')
-            f.write(render_to_string(template, context))
-            f.close()
+            # f = open(convocation_html_filename, 'wb')
+            # f.write(render_to_string(template, context))
+            # f.close()
             # Conversion du fichier html en pdf
-            os.system("{prog_name} {source} {dest}".format(prog_name='/usr/local/bin/wkhtmltopdf',
-                                                           source=convocation_html_filename,
-                                                           dest=convocation_pdf_filename))
+            # os.system("{prog_name} {source} {dest}".format(prog_name='/usr/local/bin/wkhtmltopdf',
+            #                                                source=convocation_html_filename,
+            #                                                dest=convocation_pdf_filename))
             # Creation et Envoi du mail avec la PJ
             email = EmailMessage(mail_subject, mail_body, from_email="noreply@iedparis8.net",
-                                 to=[d['email']
-                                     if not settings.DEBUG
-                                     else 'alexandre.parent@iedparis8.net'])
-            f = open(convocation_pdf_filename)
-            email.attach(os.path.basename(convocation_pdf_filename), f.read(), 'application/pdf')
+                                 to=[get_email_envoi(d['email'])])
+            # f = open(convocation_pdf_filename)
+            email.attach('convocation.pdf', f, 'application/pdf')
             email.send()
-            f.close()
+            # f.close()
             # Clean
-            os.remove(convocation_html_filename)
-            os.remove(convocation_pdf_filename)
+            # os.remove(convocation_html_filename)
+            # os.remove(convocation_pdf_filename)
             if settings.DEBUG:
                 debug_count += 1
                 if debug_count == 10:
