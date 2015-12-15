@@ -8,7 +8,7 @@ from django_apogee.models import InsAdmEtpInitial, Etape
 from pprint import pprint
 import os
 from django.conf import settings
-from utils import make_pdf, get_email_envoi
+from duck_utils.utils import make_pdf, get_email_envoi
 
 
 class Command(BaseCommand):
@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         mail_body = u"""
-        Ci-joint votre convocation aux regoupements
+        Ci-joint votre convocation aux regroupements
 
         Ceci est un email automatique.\n
         Veuillez ne pas y répondre.
