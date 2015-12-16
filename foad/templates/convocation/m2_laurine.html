@@ -1,6 +1,8 @@
+{% load static %}
 <html>
 <head>
     <title></title>
+    <meta charset="UTF-8">
     <style type="text/css">
         body {
             text-align: justify;
@@ -36,8 +38,8 @@
 </head>
 
 <body>
-{#<img id="logo_ied" src="{{ static }}/logo-ied.jpg"/>#}
-<div >
+<img id="logo_ied" src="{{ static }}/logo-ied.jpg"/>
+<div>
     <i class="light">
         UNIVERSITE PARIS 8 <br>
         INSTITUT D’ENSEIGNEMENT A DISTANCE <br>
@@ -45,47 +47,75 @@
         2 RUE DE LA LIBERTE<br>
         93 526 SAINT DENIS CEDEX <br>
     </i>
-</div>
+</div><br>
 <div class="entette">
 
-Nom : {{ individu.LIB_NOM_PAT_IND }} {{ individu.LIB_NOM_USU_IND }}<br>
-Prénom : {{ individu.LIB_PR1_IND }}<br>
-        N° étudiant : {{ individu.COD_ETU }} <br>
-        N° groupe : {{ num_groupe }} <br>
+Nom : {{ nom }}<br>
+Prénom : {{ prenom }}<br>
+        N° étudiant : {{ num_etu }} <br>
 
-</div>
-
+</div><br><br>
+<p style="float:right">Saint-Denis, le {{ jour }} {{ mois }} {{ annee }},</p>
 <div>
-<b><u>CONVOCATION AUX REGROUPEMENTS</u></b><br>
-
-</div>
-
-Madame, Mademoiselle, Monsieur,<br>
-<div>
-Vous êtes convoqué(e) pour les travaux pratiques de <b>master 2 de psychologie clinique, pathologie et psychothérapies</b> qui se dérouleront du <b><u>15 janvier au 17 janvier 2014 à l’IED bât. D, 2ième étage</u></b>. Les 2 sessions de janvier et mars sont obligatoires. Si vous êtes en 2 année et que vous avez assisté lors de votre première année de master 2 à ces regroupements ils ne sont pas obligatoires pour vous cette année. (Prévenir Melle BALIKCI avec copie à A. PLAGNOL dans ce cas)<br><br>
-</div>
-<div><b><u>Vous êtes dans le groupe: {{ num_groupe }}, 15 janvier au 17 janvier 2014 de 9h00 à 18h30</u></b></div><br><br>
-
-<div><b><u>Vous êtes dans le SÉMINAIRE :  le 16 janvier 2014 de 14h15 à 18h30</u></b></div><br>
-
-
-<div><b>Accès : métro  ligne 13, direction et arrêt « Saint-Denis Université »</b></div><br><br>
-
-<div>
-    Les groupes sont complets et les dates non modifiables. Ce délai vous est donné pour que vous puissiez vous organiser au niveau professionnel et familial afin de pouvoir assister au TP<br><br><br>
+<strong>Service Scolarité</strong><br>
+Poste : 01.49.40.72.18<br>
+Mail : lorine.balikci@iedparis8.net<br><br>
 </div>
 <div>
-    <u>Dans le cas où vous seriez dans l’impossibilité d’assister à ces TP, veuillez nous en avertir dès réception de ce courrier.</u> Seul les raisons impératives (eg médicales) avec attestation certifiée pourront être considérées.<br><br>
+<center><b><u>CONVOCATION REGROUPEMENTS</u></b><br></center>
+</div><br>
 
-Les étudiants n’ayant pas communiqué leur choix de projet de recherche, sont automatiquement intégrés dans un groupe et un séminaire. Ils devront voir sur place, lors de ce regroupement, à s’inscrire auprès d’un directeur de recherche.<br><br>
+Madame, Monsieur,<br>
+<br>
+<p>
+    Vous êtes convoqué(e) pour les travaux pratiques de master 2 de psychologie clinique, pathologie et
+    psychothérapies qui se dérouleront du <b>{{ date_regroupement }} à l’IED bât. D, 2 ème étage</b>.
+    Les 2 sessions de janvier et mars sont obligatoires. Si vous êtes en 2 année et que vous avez
+    assisté lors de votre première année de master 2 à ces regroupements ils ne sont pas obligatoires
+    pour vous cette année. (Prévenir Melle BALIKCI avec copie à A. PLAGNOL dans ce cas)
+</p>
+<p style="font-weight: bold; font-style: italic; text-decoration: underline">
+    Vous êtes dans le groupe: « {{ groupe }} », {{ date_regroupement }} de 9h00 à 18h30
+</p>
 
-Veuillez croire, Madame, Monsieur, à mes meilleures salutations.<br>
-</div>
-<di>
+<p style="font-weight: bold; font-style: italic">
+    Accès : métro  ligne 13, direction et arrêt « Saint-Denis Université »
+</p>
+
+<p>
+    Les groupes sont complets et les dates non modifiables.
+    Ce délai vous est donné pour que vous puissiez vous organiser au niveau professionnel et
+    familial afin de pouvoir assister au TP
+</p>
+
+<p>
+    <span style="text-decoration: underline">Dans le cas où vous seriez dans l’impossibilité d’assister à ces TP, veuillez nous en avertir
+    dès réception de ce courrier</span>. Seul les raisons impératives (eg médicales) avec attestation
+    certifiée pourront être considérées.
+</p>
+
+<p>
+    Les étudiants n’ayant pas communiqué leur choix de projet de recherche, sont automatiquement
+    intégrés dans un groupe et un séminaire. Ils devront voir sur place, lors de ce regroupement,
+    à s’inscrire auprès d’un directeur de recherche.
+</p>
+
+<p>
+Veuillez croire, Madame, Monsieur, à nos meilleures salutations.
+</p>
+
+<div>
     Lorine BALIKCI <br>
     Gestionnaire à la scolarité IED <br><br>
-</di>
+</div>
+
+<br>
+<br>
+<br>
+<footer>
+<hr>
 <div><b>IED Université Paris 8 – 2, rue de la Liberté – Bât. D – 93526 Saint-Denis Cedex – Tél. 01 49 40 72 00</b></div>
 <div><center>Fax. 01 49 40 72 04 – www.iedparis8.net</center></div>
+</footer>
 </body>
 </html>
