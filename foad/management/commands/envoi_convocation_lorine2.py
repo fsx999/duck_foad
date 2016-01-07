@@ -16,16 +16,23 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         mail_body = u"""
+        Annule et remplace le précédent envoi.
+
         Ci-joint votre convocation aux regroupements
 
         Ceci est un email automatique.\n
         Veuillez ne pas y répondre.
+
+        Les 2 sessions de janvier et mars sont obligatoires.
+        Si vous êtes en 2e année et que vous avez assisté lors de votre première année
+        de master 2 à ces regroupements ils ne sont pas obligatoires pour vous
+        cette année.
         """
         template = "convocation/m2_laurine.html"
-        mail_subject = u"[IED] CONVOCATION AUX REGROUPEMENTS"
+        mail_subject = u"[IED] CONVOCATION AUX REGROUPEMENTS (CORRECTIF)"
         # Numero Etudiant;Nom patronimique;Prénom:;Email perso;Email Foad;groupe
 
-        csv_filename = settings.BASE_DIR + '/M2_2015.csv'
+        csv_filename = settings.BASE_DIR + '/M2_2015-1.csv'
 
         destinataires = []
         with open(csv_filename, 'r') as f:
@@ -71,7 +78,7 @@ class Command(BaseCommand):
                                              '..',
                                              'duck_inscription', 'duck_inscription',
                                              'static', 'images')
-            context.update({'jour': str(now.day),   
+            context.update({'jour': str(now.day),
                             'mois': mois_dict[now.month],
                             'annee': str(now.year)})
 
